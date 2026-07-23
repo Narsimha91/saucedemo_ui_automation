@@ -19,7 +19,7 @@ def test_add_to_cart(request, page, login_fixture):
 
 
     assert buy_count <= 6, "Products out of range (Min 1 and Max 6 items)"
-    assert buy_count > 6, "Zero Products selected (Min 1 and Max 6 items)"
+    assert buy_count > 0, "Zero Products selected (Min 1 and Max 6 items)"
 
     all_product = page.locator(config.get_inventory_elements('inventory_item'))
 
