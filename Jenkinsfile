@@ -31,20 +31,20 @@ pipeline {
         }
 
         stage('Install Dependencies') {
-            steps {
-                bat '''
-                    echo ===== Upgrade Pip =====
-                    venv\\Scripts\\python -m pip install --upgrade pip
+    steps {
+        bat '''
+            venv\\Scripts\\python -m pip install --upgrade pip
 
-                    echo ===== Install Requirements =====
-                    venv\\Scripts\\python -m pip install -r requirements.txt
+            venv\\Scripts\\python -m pip install pytest
+            venv\\Scripts\\python -m pip install pytest-xdist
+            venv\\Scripts\\python -m pip install pytest-html
+            venv\\Scripts\\python -m pip install allure-pytest
+            venv\\Scripts\\python -m pip install playwright
 
-                    echo ===== Install Playwright Browsers =====
-                    venv\\Scripts\\python -m playwright install
-                '''
-            }
-        }
-
+            venv\\Scripts\\python -m playwright install
+        '''
+    }
+}
         stage('Run Pytest') {
             steps {
                 bat '''
