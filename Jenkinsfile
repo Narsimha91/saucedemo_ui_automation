@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Setup Python Environment') {
+            steps {
+                bat 'python -m venv venv'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                bat 'venv\\Scripts\\python -m pip install --upgrade pip'
+                bat 'venv\\Scripts\\pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Pytest') {
+            steps {
+                bat 'venv\\Scripts\\pytest -m add_to_cart -n 3 --html=reports\pytest-report.html --self-contained-html --buy="1" --alluredir=allure-results'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pytest passed successfully'
+        }
+
+        failure {
+            echo 'Tests failed'
+        }
+
+        always {
+            echo 'Pipeline finished'
+        }
+    }
+}
