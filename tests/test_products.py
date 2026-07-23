@@ -15,7 +15,11 @@ def test_add_to_cart(request, page, login_fixture):
 
     buy_count = int(request.config.getoption("--buy"))
 
-    assert buy_count <= 6, "Products out of range (Max 6 items)"
+    print("PRODUCT BUY COUNT", buy_count)
+
+
+    assert buy_count <= 6, "Products out of range (Min 1 and Max 6 items)"
+    assert buy_count > 6, "Zero Products selected (Min 1 and Max 6 items)"
 
     all_product = page.locator(config.get_inventory_elements('inventory_item'))
 
@@ -24,6 +28,10 @@ def test_add_to_cart(request, page, login_fixture):
     add_to_cart_items = []
 
     for index in range(all_product.count()):
+
+        if buy_count < index + 1:
+            break
+
         with allure.step(f"Add product to card"):
             product = all_product.nth(index)
 
@@ -35,10 +43,9 @@ def test_add_to_cart(request, page, login_fixture):
 
             cart_items_count =  InventoryPage(page).get_cart_items()
             assert cart_items_count == index + 1
-            if buy_count == index + 1:
-                break
-            else:
-                continue
+
+            # else:
+            #     continue
 
     page.locator(config.get_web_elements('cart')).click()
     assert "cart.html" in page.url
