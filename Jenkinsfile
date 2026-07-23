@@ -18,13 +18,16 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 bat 'venv\\Scripts\\python -m pip install --upgrade pip'
-                bat 'venv\\Scripts\\pip install -r requirements.txt'
+		bat 'call venv\\Scripts\\activate'
+                bat 'pip install -r requirements.txt'
             }
         }
 
         stage('Run Pytest') {
             steps {
-                bat 'venv\\Scripts\\pytest -m add_to_cart -n 1 --buy="1" --alluredir=allure-results'
+
+		bat 'call venv\\Scripts\\activate'
+                bat 'pytest -m add_to_cart -n 1 --buy="1" --alluredir=allure-results'
             }
         }
     }
