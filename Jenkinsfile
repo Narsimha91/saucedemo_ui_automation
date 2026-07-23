@@ -24,7 +24,7 @@ pipeline {
 
         stage('Run Pytest') {
             steps {
-                bat 'venv\\Scripts\\pytest -m add_to_cart -n 3 --html=reports\pytest-report.html --self-contained-html --buy="1" --alluredir=allure-results'
+                bat 'venv\\Scripts\\pytest -m add_to_cart -n 1 --buy="1" --alluredir=allure-results'
             }
         }
     }
