@@ -1,0 +1,79 @@
+{
+    "base_url": "https://www.saucedemo.com/",
+    "username": "standard_user",
+    "lastname": "saucedemo",
+    "pincode": "500056",
+    "password": "secret_sauce",
+    "browser": "chrome",
+
+  "all_urls" : [
+      "https://www.saucedemo.com/inventory.html",
+      "https://www.saucedemo.com/cart.html",
+      "https://www.saucedemo.com/inventory-item.html?id=4",
+      "https://www.saucedemo.com/checkout-step-one.html",
+      "https://www.saucedemo.com/checkout-step-two.html",
+      "https://www.saucedemo.com/checkout-complete.html"
+    ],
+
+  "web_elements": {
+      "app_logo": "//div[contains(text(), 'Swag Labs')]",
+      "cart": "//a[contains(@data-test, 'shopping-cart-link')]",
+
+      "menu_icon_open": "//button[contains(text(), 'Open Menu')]",
+      "menu_icon_close": "//button[contains(text(), 'Close Menu')]",
+      "reset_cart": "//a[contains(text(), 'Reset App State')]",
+      "all_items": "//a[contains(text(), 'All Items')]",
+      "login_logo": "//a[contains(text(), 'Logout')]",
+
+
+      "checkout_btn": "//button[@data-test='checkout']",
+      "continue_btn": "//input[@data-test='continue']",
+      "finish_btn": "//button[@data-test='finish']",
+      "finish_back_btn": "//button[@data-test='back-to-products']",
+      "cancel_btn": "//button[@data-test='cancel']",
+
+    "checkout": {
+      "firstname": "//input[@data-test='firstName']",
+      "lastname": "//input[@data-test='lastName']",
+      "pincode": "//input[@data-test='postalCode']",
+      "order_complete_text": "//h2[@class='complete-header']",
+      "subtotal": "//div[@data-test='subtotal-label']",
+      "tax": "//div[@data-test='tax-label']",
+      "final_price": "//div[@data-test='total-label']"
+
+
+    },
+
+    "login_page": {
+        "username": "//input[@type='text']",
+        "password": "//input[@type='password']",
+        "login_btn": "//input[@type='submit']",
+        "error_msg": "//h3[contains(text(), 'Epic sadface')]"
+    },
+    "inventory_page": {
+        "product_title": "//a[contains(@data-test, 'title')]",
+        "product_sort": "//select[contains(@data-test, 'product-sort-container')]",
+        "inventory_item": "//div[@class='inventory_item']",
+        "add_to_cart": "//div[@data-test='add-to-cart-REPLACE_ITEM_NAME']",
+        "cart_count":"[data-test='shopping-cart-badge']"
+
+    },
+    "product_page": {
+        "product_name": "//div[contains(@data-test, 'inventory-item-name')]",
+        "product_desc": "//div[@data-test='inventory-item-desc']",
+        "product_price": "//div[contains(@data-test, 'inventory-item-price')]",
+        "add_to_cart": "//button[contains(@data-test, 'add-to-cart')]",
+        "product_img": "//div[contains(@class, 'inventory_item_img')]"
+
+    },
+    "footer": {
+      "twitter": "//a[contains(@data-test, 'social-twitter')]",
+      "facebook": "//a[contains(@data-test, 'social-facebook')]",
+      "linkedin": "//a[contains(@data-test, 'social-linkedin')]",
+      "copyrights": "//div[contains(@data-test, 'footer-copy')]"
+    }
+  }
+}
+
+
+
