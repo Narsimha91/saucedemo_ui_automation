@@ -9,40 +9,78 @@ pipeline {
             }
         }
 
+        stage('Check Workspace') {
+            steps {
+                bat '''
+                    echo ===== Workspace Files =====
+                    dir
+                '''
+            }
+        }
+
         stage('Setup Python Environment') {
             steps {
-                bat 'python -m venv venv'
+                bat '''
+                    echo ===== Python Version =====
+                    python --version
+
+                    echo ===== Creating Virtual Environment =====
+                    python -m venv venv
+                '''
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                bat 'venv\\Scripts\\python -m pip install --upgrade pip'
-		bat 'call venv\\Scripts\\activate'
-                bat 'pip install -r requirements.txt'
+                bat '''
+                    echo ===== Upgrade Pip =====
+                    venv\\Scripts\\python -m pip install --upgrade pip
+
+                    echo ===== Install Requirements =====
+                    venv\\Scripts\\python -m pip install -r requirements.txt
+
+                    echo ===== Install Playwright Browsers =====
+                    venv\\Scripts\\python -m playwright install
+                '''
             }
         }
 
         stage('Run Pytest') {
             steps {
+                bat '''
+                    echo ===== Running Tests =====
 
-		bat 'call venv\\Scripts\\activate'
-                bat 'pytest -m add_to_cart -n 1 --buy="1" --alluredir=allure-results'
+                    venv\\Scripts\\python -m pytest ^
+                    -m add_to_cart ^
+                    -n 1 ^
+                    --buy="1" ^
+                    --alluredir=allure-results
+                '''
             }
         }
     }
 
     post {
+
+        always {
+            echo '===== Pipeline Finished ====='
+
+            allure([
+                includeProperties: false,
+                results: [
+                    [
+                        path: 'allure-results'
+                    ]
+                ]
+            ])
+        }
+
         success {
-            echo 'Pytest passed successfully'
+            echo '===== Tests Passed Successfully ====='
         }
 
         failure {
-            echo 'Tests failed'
-        }
-
-        always {
-            echo 'Pipeline finished'
+            echo '===== Tests Failed ====='
         }
     }
 }
